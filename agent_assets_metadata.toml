@@ -1,0 +1,37 @@
+uploads = []
+
+[[generated]]
+id = "N32b4wQzKnfBhGS7I_Lr7"
+uri = "file://artifacts/miroir-de-ratiss/src/assets/images/codex-conscient.png"
+type = "image"
+title = "Book 1 cover art"
+
+[[generated]]
+id = "7bI7Uj-0S8VbrA1vXksJZ"
+uri = "file://artifacts/miroir-de-ratiss/src/assets/images/frequence-ratiss.png"
+type = "image"
+title = "Book 2 cover art"
+
+[[generated]]
+id = "s_no-ZQL2vJ-QdRg3Xiij"
+uri = "file://artifacts/miroir-de-ratiss/src/assets/images/about-desk.png"
+type = "image"
+title = "About page background"
+
+[[generated]]
+id = "5mXxt_8x2FrGBSUfGsQQh"
+uri = "file://artifacts/miroir-de-ratiss/src/assets/images/hero-cosmos.png"
+type = "image"
+title = "Hero section visual"
+
+[[outputs]]
+id = "K6cjQnNpVaQboVTgyib07"
+uri = "file://exports/miroir-de-ratiss-site-complet.tar.gz"
+type = "unspecified"
+title = "Le Miroir de Ratiss — code source complet (à télécharger)"
+
+[[outputs]]
+id = "Czv67hDC-w6dVQyWb6tqU"
+uri = "file://GUIDE-HEBERGEMENT.md"
+type = "text"
+title = "Guide d'hébergement (étapes pour mettre en ligne ailleurs)"
