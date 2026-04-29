@@ -1,43 +1,19 @@
-import { Router, type IRouter } from "express";
-import { db } from "@workspace/db";
-import { journalEntriesTable as journalEntries } from "@workspace/db/schema";
-import { desc, eq } from "drizzle-orm";
-import {
-  CreateJournalEntryBody,
-  DeleteJournalEntryParams,
-} from "@workspace/api-zod";
+import { pgTable, serial, text, timestamp, integer } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod/v4";
 
-const router: IRouter = Router();
-
-router.get("/journal", async (_req, res) => {
-  const rows = await db
-    .select()
-    .from(journalEntries)
-    .orderBy(desc(journalEntries.createdAt));
-  res.json(rows);
+export const journalEntriesTable = pgTable("journal_entries", {
+  id: serial("id").primaryKey(),
+  questionDay: integer("question_day").notNull(),
+  question: text("question").notNull(),
+  reflection: text("reflection").notNull(),
+  vibration: text("vibration").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-router.post("/journal", async (req, res) => {
-  const parsed = CreateJournalEntryBody.safeParse(req.body);
-  if (!parsed.success) {
-    res.status(400).json({ error: "Invalid body", details: parsed.error.flatten() });
-    return;
-  }
-  const [created] = await db
-    .insert(journalEntries)
-    .values(parsed.data)
-    .returning();
-  res.status(201).json(created);
+export const insertJournalEntrySchema = createInsertSchema(journalEntriesTable).omit({
+  id: true,
+  createdAt: true,
 });
-
-router.delete("/journal/:id", async (req, res) => {
-  const params = DeleteJournalEntryParams.safeParse(req.params);
-  if (!params.success) {
-    res.status(400).json({ error: "Invalid id" });
-    return;
-  }
-  await db.delete(journalEntries).where(eq(journalEntries.id, params.data.id));
-  res.status(204).send();
-});
-
-export default router;
+export type InsertJournalEntry = z.infer<typeof insertJournalEntrySchema>;
+export type JournalEntry = typeof journalEntriesTable.$inferSelect;
